@@ -3,11 +3,10 @@ package com.thoughtworks.gtb.basic.quiz.api;
 import com.thoughtworks.gtb.basic.quiz.domain.Education;
 import com.thoughtworks.gtb.basic.quiz.service.EducationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -23,5 +22,11 @@ public class EducationController {
     @GetMapping("/{id}/educations")
     public List<Education> getEducations(@PathVariable("id") long userId) {
         return educationService.getEducation(userId);
+    }
+
+    @PostMapping("/{id}/educations")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Education addEducation(@PathVariable("id") long userId, @RequestBody @Valid Education education) {
+        return educationService.addEducation(userId, education);
     }
 }
