@@ -24,4 +24,8 @@ public class UserService {
         }
         throw new UserNotFoundException();
     }
+
+    public User addUser(User user) {
+        return userRepository.addUser(user);
+    }
 }

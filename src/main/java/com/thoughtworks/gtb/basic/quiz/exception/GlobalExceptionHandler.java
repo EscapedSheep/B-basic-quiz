@@ -2,6 +2,7 @@ package com.thoughtworks.gtb.basic.quiz.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -19,5 +20,16 @@ public class GlobalExceptionHandler {
                 .timestamp(new Date())
                 .build();
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Error> ParmNotValidHandler(MethodArgumentNotValidException exception) {
+        String message = exception.getBindingResult().getFieldError().getDefaultMessage();
+        Error error = Error.builder()
+                .timestamp(new Date())
+                .error(HttpStatus.BAD_REQUEST.name())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .message(message).build();
+        return ResponseEntity.badRequest().body(error);
     }
 }
