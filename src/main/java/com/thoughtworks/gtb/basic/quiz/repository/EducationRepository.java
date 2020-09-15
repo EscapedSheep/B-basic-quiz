@@ -40,4 +40,12 @@ public class EducationRepository {
     public List<Education> getEducations(long userId) {
         return educations.stream().filter(education -> education.getUserId() == userId).collect(Collectors.toList());
     }
+
+    public List<Education> getEducations() {
+        return new ArrayList<>(educations);
+    }
+
+    public void setEducations(List<Education> educations) {
+        this.educations = new ArrayList<>(educations);
+    }
 }

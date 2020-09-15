@@ -34,6 +34,14 @@ public class UserRepository {
         return user;
     }
 
+    public List<User> getUsers() {
+        return new ArrayList<>(users);
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = new ArrayList<>(users);
+    }
+
     public Optional<User> getUser(long id) {
         return users.stream().filter(user -> user.getId() == id).findFirst();
     }
