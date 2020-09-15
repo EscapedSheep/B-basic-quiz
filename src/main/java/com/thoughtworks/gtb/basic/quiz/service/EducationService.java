@@ -24,19 +24,20 @@ public class EducationService {
     }
 
     public List<Education> getEducation(long userId) {
-        Optional<User> findUser = userRepository.getUser(userId);
-        if (findUser.isPresent()) {
-            return educationRepository.getEducations(userId);
-        }
-        throw new UserNotFoundException();
+        checkUserExisted(userId);
+        return educationRepository.getEducations(userId);
     }
 
     public Education addEducation(long userId, Education education) {
+        checkUserExisted(userId);
+        education.setUserId(userId);
+        return educationRepository.addEducation(education);
+    }
+
+    private void checkUserExisted(long userId) {
         Optional<User> findUser = userRepository.getUser(userId);
-        if (findUser.isPresent()) {
-            education.setUserId(userId);
-            return educationRepository.addEducation(education);
+        if (!findUser.isPresent()) {
+            throw new UserNotFoundException();
         }
-        throw new UserNotFoundException();
     }
 }
