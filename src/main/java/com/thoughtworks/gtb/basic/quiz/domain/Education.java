@@ -9,6 +9,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import static com.thoughtworks.gtb.basic.quiz.domain.PropertyVariable.*;
 import static com.thoughtworks.gtb.basic.quiz.exception.ErrorMessage.*;
 
 @Data
@@ -22,10 +23,10 @@ public class Education {
     private long year;
 
     @NotBlank(message = TITLE_INVALID)
-    @Size(min = 1, max = 256, message = TITLE_INVALID)
+    @Size(min = TITLE_MIN_LENGTH, max = TITLE_MAX_LENGTH, message = TITLE_INVALID)
     private String title;
 
     @NotBlank(message = DESC_INVALID)
-    @Size(min = 1, max = 4096, message = DESC_INVALID)
+    @Size(min = EDU_DESC_MIN_LENGTH, max = EDU_DESC_MAX_LENGTH, message = DESC_INVALID)
     private String description;
 }
