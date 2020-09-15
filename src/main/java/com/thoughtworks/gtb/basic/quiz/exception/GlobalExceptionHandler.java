@@ -23,7 +23,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Error> ParmNotValidHandler(MethodArgumentNotValidException exception) {
+    public ResponseEntity<Error> ParamNotValidHandler(MethodArgumentNotValidException exception) {
         String message = exception.getBindingResult().getFieldError().getDefaultMessage();
         Error error = Error.builder()
                 .timestamp(new Date())
