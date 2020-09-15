@@ -12,8 +12,8 @@ com/thoughtworks/gtb/basic/quiz/service/UserService.java
 com/thoughtworks/gtb/basic/quiz/domain/User.java
  com.thoughtworks.gtb.basic.quiz.domain.User
  com.thoughtworks.gtb.basic.quiz.domain.User$UserBuilder
-com/thoughtworks/gtb/basic/quiz/service/EducationService.java
- com.thoughtworks.gtb.basic.quiz.service.EducationService
+com/thoughtworks/gtb/basic/quiz/api/UserController.java
+ com.thoughtworks.gtb.basic.quiz.api.UserController
 com/thoughtworks/gtb/basic/quiz/repository/EducationRepository.java
  com.thoughtworks.gtb.basic.quiz.repository.EducationRepository
 com/thoughtworks/gtb/basic/quiz/exception/UserNotFoundException.java
@@ -27,5 +27,5 @@ com/thoughtworks/gtb/basic/quiz/api/BaseController.java
  com.thoughtworks.gtb.basic.quiz.api.BaseController
 com/thoughtworks/gtb/basic/quiz/api/EducationController.java
  com.thoughtworks.gtb.basic.quiz.api.EducationController
-com/thoughtworks/gtb/basic/quiz/api/UserController.java
- com.thoughtworks.gtb.basic.quiz.api.UserController
+com/thoughtworks/gtb/basic/quiz/service/EducationService.java
+ com.thoughtworks.gtb.basic.quiz.service.EducationService
