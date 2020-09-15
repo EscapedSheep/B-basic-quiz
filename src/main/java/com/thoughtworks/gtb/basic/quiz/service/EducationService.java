@@ -32,7 +32,11 @@ public class EducationService {
     }
 
     public Education addEducation(long userId, Education education) {
-        education.setUserId(userId);
-        return educationRepository.addEducation(education);
+        Optional<User> findUser = userRepository.getUser(userId);
+        if (findUser.isPresent()) {
+            education.setUserId(userId);
+            return educationRepository.addEducation(education);
+        }
+        throw new UserNotFoundException();
     }
 }
