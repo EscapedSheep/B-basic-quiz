@@ -9,6 +9,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+// GTB: 一般不做这样的基类
 @RestController
 @RequestMapping("/users")
 @CrossOrigin

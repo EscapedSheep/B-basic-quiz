@@ -41,10 +41,12 @@ public class EducationRepository {
         return educations.stream().filter(education -> education.getUserId() == userId).collect(Collectors.toList());
     }
 
+    // GTB: - 未删除的无用代码
     public List<Education> getEducations() {
         return new ArrayList<>(educations);
     }
 
+    // GTB: - 不要专门为了 testing 而增加方法
     public void setEducations(List<Education> educations) {
         this.educations = new ArrayList<>(educations);
     }

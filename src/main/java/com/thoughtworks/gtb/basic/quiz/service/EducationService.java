@@ -35,6 +35,7 @@ public class EducationService {
     }
 
     private void checkUserExisted(long userId) {
+        // GTB: 多了解一下Optional 的用法：userRepository.getUser(userId).orElseThrow(UserNotFoundException::new);
         Optional<User> findUser = userRepository.getUser(userId);
         if (!findUser.isPresent()) {
             throw new UserNotFoundException();

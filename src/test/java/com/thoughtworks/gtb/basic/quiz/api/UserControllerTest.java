@@ -22,6 +22,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+// GTB: + 有测试，覆盖基本场景
 @SpringBootTest
 @AutoConfigureMockMvc
 class UserControllerTest {
