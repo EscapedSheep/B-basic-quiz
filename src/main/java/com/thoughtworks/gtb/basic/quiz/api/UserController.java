@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@BaseController
+@RestController
+@RequestMapping("/users")
+@CrossOrigin
 public class UserController {
     private UserService userService;
 

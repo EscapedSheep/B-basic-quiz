@@ -38,7 +38,6 @@ public class UserRepository {
         return new ArrayList<>(users);
     }
 
-    // GTB: - 不要专门为了 testing 而增加方法
     public void setUsers(List<User> users) {
         this.users = new ArrayList<>(users);
     }
