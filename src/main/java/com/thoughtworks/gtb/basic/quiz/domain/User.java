@@ -1,13 +1,18 @@
 package com.thoughtworks.gtb.basic.quiz.domain;
 
+import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 import static com.thoughtworks.gtb.basic.quiz.domain.PropertyVariable.*;
 import static com.thoughtworks.gtb.basic.quiz.exception.ErrorMessage.*;
@@ -16,7 +21,11 @@ import static com.thoughtworks.gtb.basic.quiz.exception.ErrorMessage.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Entity
+@Table
 public class User {
+    @Id
+    @GeneratedValue
     private long id;
 
     @NotBlank(message = NAME_INVALID)
@@ -33,4 +42,8 @@ public class User {
 
     @Size(min = USER_DESC_MIN_LENGTH, max = USER_DESC_MAX_LENGTH, message = DESC_INVALID)
     private String description;
+
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "user")
+    @JsonIgnore
+    private List<Education> educationList;
 }

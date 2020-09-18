@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EducationService {
@@ -24,21 +23,17 @@ public class EducationService {
     }
 
     public List<Education> getEducation(long userId) {
-        checkUserExisted(userId);
-        return educationRepository.getEducations(userId);
+        User findUser = getUserIfExisted(userId);
+        return educationRepository.findAllByUser(findUser);
     }
 
     public Education addEducation(long userId, Education education) {
-        checkUserExisted(userId);
-        education.setUserId(userId);
-        return educationRepository.addEducation(education);
+        User findUser = getUserIfExisted(userId);
+        education.setUser(findUser);
+        return educationRepository.save(education);
     }
 
-    private void checkUserExisted(long userId) {
-        // GTB: 多了解一下Optional 的用法：userRepository.getUser(userId).orElseThrow(UserNotFoundException::new);
-        Optional<User> findUser = userRepository.getUser(userId);
-        if (!findUser.isPresent()) {
-            throw new UserNotFoundException();
-        }
+    private User getUserIfExisted(long userId) {
+        return userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
     }
 }

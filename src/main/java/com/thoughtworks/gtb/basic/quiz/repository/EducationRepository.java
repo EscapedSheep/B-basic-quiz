@@ -1,47 +1,13 @@
 package com.thoughtworks.gtb.basic.quiz.repository;
 
 import com.thoughtworks.gtb.basic.quiz.domain.Education;
+import com.thoughtworks.gtb.basic.quiz.domain.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import javax.annotation.PostConstruct;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Repository
-public class EducationRepository {
-    private List<Education> educations;
-
-    @PostConstruct
-    private void init() {
-        educations = new ArrayList<>();
-        Education educationFirst = Education.builder()
-                .description("Aspernatur, mollitia, quos maxime eius suscipit sed beatae ducimus quaerat quibusdam perferendis? Iusto, quibusdam asperiores unde repellat.")
-                .title("First level graduation in Graphic Design")
-                .year(2009)
-                .userId(1)
-                .build();
-
-        Education educationSecondary = Education.builder()
-                .description("Eos, explicabo, nam, tenetur et ab eius deserunt aspernatur ipsum ducimus quibusdam quis voluptatibus.")
-                .title("Secondary school specializing in artistic")
-                .year(2005)
-                .userId(1)
-                .build();
-        addEducation(educationSecondary);
-        addEducation(educationFirst);
-    }
-
-    public Education addEducation(Education education) {
-        educations.add(education);
-        return education;
-    }
-
-    public List<Education> getEducations(long userId) {
-        return educations.stream().filter(education -> education.getUserId() == userId).collect(Collectors.toList());
-    }
-
-    public void setEducations(List<Education> educations) {
-        this.educations = new ArrayList<>(educations);
-    }
+public interface EducationRepository extends JpaRepository<Education, Long> {
+    public List<Education> findAllByUser(User user);
 }
