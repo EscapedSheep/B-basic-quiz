@@ -1,14 +1,14 @@
 package com.thoughtworks.gtb.basic.quiz.api;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thoughtworks.gtb.basic.quiz.domain.User;
 import com.thoughtworks.gtb.basic.quiz.exception.UserNotFoundException;
 import com.thoughtworks.gtb.basic.quiz.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -20,12 +20,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 @WebMvcTest(UserController.class)
-@AutoConfigureMockMvc
+@AutoConfigureJsonTesters
 class UserControllerTest {
 
     @Autowired
@@ -36,11 +36,12 @@ class UserControllerTest {
 
     private User user;
 
+    @Autowired
     private JacksonTester<User> userJacksonTester;
 
     @BeforeEach
     void setUp() {
-        JacksonTester.initFields(this, new ObjectMapper());
+        Mockito.reset(userService);
         user = User.builder()
                 .name("testName")
                 .description("testDesc")
@@ -53,29 +54,31 @@ class UserControllerTest {
     @Nested
     class getUser {
         @Test
-        void when_user_existed() throws Exception {
+        void when_user_existed_should_return_user() throws Exception {
             when(userService.getUser(anyLong())).thenReturn(user);
 
             MockHttpServletResponse response = mockMvc.perform(get("/users/1")).andReturn().getResponse();
 
             assertEquals(response.getStatus(), HttpStatus.OK.value());
             assertEquals(response.getContentAsString(), userJacksonTester.write(user).getJson());
+            verify(userService).getUser(1);
         }
 
         @Test
-        void when_user_not_existed() throws Exception {
+        void when_user_not_existed_should_return_not_found() throws Exception {
             when(userService.getUser(anyLong())).thenThrow(new UserNotFoundException());
 
             MockHttpServletResponse response = mockMvc.perform(get("/users/1")).andReturn().getResponse();
 
             assertEquals(response.getStatus(), HttpStatus.NOT_FOUND.value());
+            verify(userService).getUser(1);
         }
     }
 
     @Nested
     class addUser {
         @Test
-        void when_user_info_valid() throws Exception {
+        void when_user_info_valid_should_add_user() throws Exception {
             User validUser = User.builder()
                     .age(18)
                     .name("twUser")
@@ -91,10 +94,11 @@ class UserControllerTest {
 
             assertEquals(response.getStatus(), HttpStatus.CREATED.value());
             assertEquals(response.getContentAsString(), userJacksonTester.write(user).getJson());
+            verify(userService).addUser(validUser);
         }
 
         @Test
-        void when_user_info_invalid() throws Exception {
+        void when_user_info_invalid_should_return_bad_request() throws Exception {
             User invalidUser = User.builder()
                     .age(1)
                     .name("tw")
