@@ -52,7 +52,7 @@ class UserServiceTest {
             User findUser = userService.getUser(1);
 
             assertEquals(findUser, user);
-            verify(userRepository).findById(1l);
+            verify(userRepository).findById(1L);
         }
 
         @Test
@@ -62,7 +62,7 @@ class UserServiceTest {
             UserNotFoundException userNotFoundException = assertThrows(UserNotFoundException.class, () -> userService.getUser(1));
 
             assertEquals(userNotFoundException.getMessage(), USER_NOT_FOUND);
-            verify(userRepository).findById(1l);
+            verify(userRepository).findById(1L);
         }
     }
 

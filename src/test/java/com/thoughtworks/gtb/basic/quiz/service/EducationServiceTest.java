@@ -68,7 +68,7 @@ class EducationServiceTest {
             List<Education> findEducations = educationService.getEducation(1);
 
             assertArrayEquals(findEducations.toArray(), educationList.toArray());
-            verify(userRepository).findById(1l);
+            verify(userRepository).findById(1L);
             verify(educationRepository).findAllByUser(user);
         }
 
@@ -92,7 +92,7 @@ class EducationServiceTest {
             Education savedEducation = educationService.addEducation(1, education);
 
             assertEquals(savedEducation, education);
-            verify(userRepository).findById(1l);
+            verify(userRepository).findById(1L);
             verify(educationRepository).save(education);
         }
     }
