@@ -78,6 +78,18 @@ class EducationControllerTest {
 
             assertEquals(response.getStatus(), HttpStatus.NOT_FOUND.value());
         }
+
+        @Test
+        void when_education_info_invalid() throws Exception{
+            Education invalidEdu = Education.builder().build();
+
+            MockHttpServletResponse response = mockMvc.perform(post("/users/1/educations")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(educationJacksonTester.write(invalidEdu).getJson()))
+                    .andReturn().getResponse();
+
+            assertEquals(response.getStatus(), HttpStatus.BAD_REQUEST.value());
+        }
     }
 
     @Nested
